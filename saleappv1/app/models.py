@@ -4,9 +4,11 @@ from app import db, app
 from flask_login import UserMixin
 import enum
 
+
 class UserRoleEnum(enum.Enum):
     USER = 1
     ADMIN = 2
+
 
 class User(db.Model, UserMixin):
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -19,6 +21,7 @@ class User(db.Model, UserMixin):
 
     def __str__(self):
         return self.name
+
 
 class Category(db.Model):
     __tablename__ = 'category'
@@ -47,11 +50,9 @@ if __name__ == '__main__':
         db.create_all()
 
         import hashlib
-        u = User(name='Admin',
-                 username='admin',
+        u = User(name='Admin', username='admin',
                  password=str(hashlib.md5('123456'.encode('utf-8')).hexdigest()),
                  user_role=UserRoleEnum.ADMIN)
-
         db.session.add(u)
         db.session.commit()
 
